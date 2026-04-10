@@ -118,12 +118,12 @@ export default function IntelliHealthPanel({ open, onClose, patientName }: Intel
               <ul className="space-y-1.5 mt-4 mb-4">
                 {currentAI.suggestions.map((s, i) => (
                   <li key={i} className="flex items-start gap-2.5 text-[13px] leading-relaxed text-[#F5F0EA]/80 group cursor-pointer">
-                    <input type="checkbox" defaultChecked className="mt-1 shrink-0 accent-[#AF7D62] rounded cursor-pointer" />
+                    <input type="checkbox" defaultChecked className="mt-1 shrink-0 accent-[#1A1816] rounded cursor-pointer" />
                     <span className="group-hover:text-[#1A1816] transition-colors text-gray-600">{s}</span>
                   </li>
                 ))}
               </ul>
-              <button className="w-full py-2 bg-[#1A1816] hover:bg-[#2a2826] text-white text-sm font-medium rounded-lg transition-colors">
+              <button className="w-full py-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium rounded-lg transition-colors">
                 Apply Selected
               </button>
             </>
@@ -310,7 +310,7 @@ function AssessmentsTab() {
             <Circle size={14} className="text-gray-300" />
           </div>
         ))}
-        <button className="w-full mt-4 py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium rounded-lg flex items-center justify-center gap-1.5 transition-colors">
+        <button className="w-full mt-4 py-2.5 bg-[#1A1816] hover:bg-[#2a2826] text-white text-sm font-medium rounded-lg flex items-center justify-center gap-1.5 transition-colors">
           Order Labs
           <ChevronRight size={14} />
         </button>
