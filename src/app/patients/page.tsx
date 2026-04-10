@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Users, Search, SlidersHorizontal, Mail, Plus, MoreHorizontal, Link2, ChevronUp, ChevronLeft, ChevronRight } from "lucide-react";
+import { Users, Search, SlidersHorizontal, Mail, Plus, MoreHorizontal, ChevronUp, ChevronLeft, ChevronRight } from "lucide-react";
 import IntelliHealthPanel from "@/components/dashboard/IntelliHealthPanel";
 
 const firstNames = ["John", "Jessica", "Maria", "Lucas", "Rachel", "David", "Emily", "Michael", "Sarah", "James", "Anna", "Robert", "Olivia", "Daniel", "Sophia", "William", "Isabella", "Benjamin", "Mia", "Alexander"];
@@ -62,36 +62,24 @@ export default function PatientsPage() {
   return (
     <div className="max-w-[1600px] mx-auto">
       {/* Page header */}
-      <div className="mb-[14px] flex items-center justify-between">
+      <div className="mb-10 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Users size={18} className="text-[#1A1816]" />
           <h1 className="text-base font-semibold text-[#1A1816]">Patients</h1>
         </div>
         <div className="flex items-center gap-3">
-          <button className="flex items-center gap-1.5 px-3 py-1.5 border border-gray-200 rounded-md text-xs font-medium text-[#1A1816] hover:bg-gray-50 transition-colors">
-            <Mail size={14} />
+          <button className="flex items-center gap-2 px-5 py-2.5 border border-gray-200 rounded-lg text-sm font-medium text-[#1A1816] hover:bg-gray-50 transition-colors">
+            <Mail size={16} />
             Send Link
           </button>
-          <button className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1A1816] text-white rounded-md text-xs font-medium hover:bg-[#2a2826] transition-colors">
-            <Plus size={14} />
+          <button className="flex items-center gap-2 px-5 py-2.5 bg-[#AF7D62] text-white rounded-lg text-sm font-medium hover:bg-[#9a6d54] transition-colors">
+            <Plus size={16} />
             Add Patient
           </button>
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="flex items-center gap-1 mb-[14px]">
-        <button className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-[#1A1816] border-b-2 border-[#1A1816]">
-          <Users size={15} />
-          Patients
-        </button>
-        <button className="flex items-center gap-1.5 px-3 py-2 text-sm text-gray-400 hover:text-gray-600">
-          <Link2 size={15} />
-          Form Links
-        </button>
-      </div>
-
-      {/* Search + Filter */}
+      {/* Search + Toggle + Filter */}
       <div className="flex items-center justify-between mb-[14px]">
         <div className="relative">
           <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -101,10 +89,20 @@ export default function PatientsPage() {
             className="pl-9 pr-4 py-2 border border-gray-200 rounded-md text-sm w-[360px] focus:outline-none focus:ring-1 focus:ring-[#1A1816]/20 focus:border-[#1A1816]/30 bg-white text-[#1A1816] placeholder-gray-400"
           />
         </div>
-        <button className="flex items-center gap-1.5 px-3 py-2 border border-gray-200 rounded-md text-sm text-gray-500 hover:bg-gray-50">
-          <SlidersHorizontal size={15} />
-          Filter
-        </button>
+        <div className="flex items-center gap-3">
+          <div className="flex border border-gray-200 rounded-md h-[38px] items-center">
+            <button className="px-3 h-full text-xs font-medium bg-gray-100 text-[#1A1816] rounded-l-md border-r border-gray-200">
+              Patients
+            </button>
+            <button className="px-3 h-full text-xs font-medium text-gray-500 hover:text-[#1A1816] rounded-r-md">
+              Form Links
+            </button>
+          </div>
+          <button className="flex items-center gap-1.5 px-3 py-2 border border-gray-200 rounded-md text-sm text-gray-500 hover:bg-gray-50">
+            <SlidersHorizontal size={15} />
+            Filter
+          </button>
+        </div>
       </div>
 
       {/* Table */}
