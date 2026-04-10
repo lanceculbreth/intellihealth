@@ -72,7 +72,7 @@ export default function PatientsPage() {
             <Mail size={16} />
             Send Link
           </button>
-          <button className="flex items-center gap-2 px-5 py-2.5 bg-[#AF7D62] text-white rounded-lg text-sm font-medium hover:bg-[#9a6d54] transition-colors">
+          <button className="flex items-center gap-2 px-5 py-2.5 bg-[#1A1816] text-white rounded-lg text-sm font-medium hover:bg-[#2a2826] transition-colors">
             <Plus size={16} />
             Add Patient
           </button>
