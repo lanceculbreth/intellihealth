@@ -66,7 +66,7 @@ export default function RevenueChart() {
             tickLine={false}
           />
           <Tooltip
-            formatter={(value: number) => [`$${value.toLocaleString()}`, "Revenue"]}
+            formatter={(value) => [`$${Number(value).toLocaleString()}`, "Revenue"]}
           />
           <Area
             type="monotone"
