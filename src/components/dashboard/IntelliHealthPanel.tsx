@@ -34,7 +34,7 @@ interface IntelliHealthPanelProps {
   patientName: string;
 }
 
-const tabLabels = ["Assessments", "Labs", "Wearable Data", "Trends", "Alerts", "Recommendation"];
+const tabLabels = ["Patient Details", "Assessments", "Labs", "Wearable Data", "Trends", "Alerts", "Recommendation"];
 
 const labCategories = [
   { color: "text-pink-500 bg-pink-50", label: "reproductive" },
@@ -83,6 +83,7 @@ export default function IntelliHealthPanel({ open, onClose, patientName }: Intel
   if (!open) return null;
 
   const aiByTab: { suggestions: string[]; action: string }[] = [
+    { suggestions: ["Emergency contact is missing — request from patient at next visit.", "Shipping address matches billing — confirm if separate shipping is needed for medication delivery.", "Patient BMI of 31 indicates obesity — ensure weight management program is active.", "Last updated 8 days ago — consider requesting updated health metrics."], action: "Update Patient Record" },
     { suggestions: ["Order metabolic panel (HbA1c, fasting glucose, lipid, kidney function) before initiating GLP-1 therapy.", "Review completed Weight Management intake — new data available for AI analysis.", "Follow up on General Health intake (in progress) — expires May 10.", "Consider scheduling baseline labs within 7 days to avoid therapy delay."], action: "Apply Recommendations" },
     { suggestions: ["Saliva + blood panel recommended based on general guidance track and low metabolic risk.", "Prioritize reproductive and androgen panels — 6 of 11 tests target hormonal assessment.", "TSH should be included to rule out thyroid-related differential diagnosis.", "Consider ordering full panel in one visit to reduce patient burden."], action: "Order Recommended Panel" },
     { suggestions: ["HRV declining since Week 3 — consider adjusting medication timing or dosage.", "Recovery scores trending down — recommend reducing exercise intensity for 1-2 weeks.", "Elevated insulin and HOMA-IR confirm insulin-resistant PCOS phenotype — Metformin dose may need review.", "Sleep quality degrading — screen for sleep apnea given BMI of 31."], action: "Apply Protocol Adjustments" },
@@ -173,12 +174,13 @@ export default function IntelliHealthPanel({ open, onClose, patientName }: Intel
 
         {/* Tab Content */}
         <div className="p-6 space-y-5">
-          {activeTab === 0 && <AssessmentsTab />}
-          {activeTab === 1 && <LabsTab />}
-          {activeTab === 2 && <WearableDataTab />}
-          {activeTab === 3 && <TrendsTab />}
-          {activeTab === 4 && <AlertsTab />}
-          {activeTab === 5 && <RecommendationTab />}
+          {activeTab === 0 && <PatientDetailsTab patientName={patientName} />}
+          {activeTab === 1 && <AssessmentsTab />}
+          {activeTab === 2 && <LabsTab />}
+          {activeTab === 3 && <WearableDataTab />}
+          {activeTab === 4 && <TrendsTab />}
+          {activeTab === 5 && <AlertsTab />}
+          {activeTab === 6 && <RecommendationTab />}
         </div>
       </div>
     </>
@@ -205,6 +207,170 @@ function AISummary({ suggestions, action }: { suggestions: string[]; action: str
         {action}
       </button>
     </div>
+  );
+}
+
+/* ─── Patient Details Tab ─── */
+function PatientDetailsTab({ patientName: name }: { patientName: string }) {
+  return (
+    <>
+      {/* Patient Header Card */}
+      <div className="bg-white rounded-xl p-5">
+        <div className="flex items-center gap-4 mb-5">
+          <div className="w-14 h-14 rounded-full bg-teal-50 flex items-center justify-center text-teal-600 text-lg font-semibold">
+            {name.split(" ").map(n => n[0]).join("").slice(0, 2)}
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h3 className="text-lg font-semibold text-[#1A1816]">{name}</h3>
+              <span className="text-xs bg-teal-50 text-teal-600 px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M20 6L9 17l-5-5" /></svg>
+                Active
+              </span>
+            </div>
+            <div className="flex items-center gap-3 text-xs text-gray-400 mt-1">
+              <span>Patient ID: 18337720</span>
+              <span>·</span>
+              <span>london@patient.com</span>
+              <span>·</span>
+              <span>+15127865634</span>
+            </div>
+          </div>
+        </div>
+        <div className="flex gap-2">
+          <button className="flex items-center gap-1.5 px-3 py-1.5 border border-gray-200 rounded-md text-xs font-medium text-[#1A1816] hover:bg-gray-50">+ Add SOAP Note</button>
+          <button className="flex items-center gap-1.5 px-3 py-1.5 border border-gray-200 rounded-md text-xs font-medium text-[#1A1816] hover:bg-gray-50">Schedule Appointment</button>
+          <button className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1A1816] text-white rounded-md text-xs font-medium hover:bg-[#2a2826]">+ Create Order</button>
+        </div>
+      </div>
+
+      {/* Personal Information + Contact */}
+      <div className="grid grid-cols-2 gap-5">
+        {/* Personal Info */}
+        <div className="bg-white rounded-xl p-5">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
+              </svg>
+            </div>
+            <div>
+              <div className="text-sm font-semibold text-[#1A1816]">Personal Information</div>
+              <div className="text-xs text-gray-400">Basic patient details</div>
+            </div>
+          </div>
+          <div className="space-y-4">
+            <div className="bg-gray-50 rounded-lg px-3 py-2.5">
+              <div className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">Date of Birth</div>
+              <div className="text-sm font-medium text-[#1A1816]">Jul 5, 1976</div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-gray-50 rounded-lg px-3 py-2.5">
+                <div className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">Gender</div>
+                <div className="text-sm font-medium text-[#1A1816]">Female</div>
+              </div>
+              <div className="bg-gray-50 rounded-lg px-3 py-2.5">
+                <div className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">Assigned Practitioner</div>
+                <div className="text-sm font-medium text-[#1A1816]">Sophia Long</div>
+              </div>
+            </div>
+            <div className="bg-gray-50 rounded-lg px-3 py-2.5">
+              <div className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">Last Updated</div>
+              <div className="text-sm font-medium text-[#1A1816]">04/08/2026, 01:57 PM</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Contact Information */}
+        <div className="bg-white rounded-xl p-5">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-8 h-8 rounded-full bg-teal-50 flex items-center justify-center">
+              <MessageSquare size={14} className="text-teal-600" />
+            </div>
+            <div>
+              <div className="text-sm font-semibold text-[#1A1816]">Contact Information</div>
+              <div className="text-xs text-gray-400">Communication details</div>
+            </div>
+          </div>
+          <div className="space-y-3">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-gray-50 rounded-lg px-3 py-2.5">
+                <div className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">Email <span className="text-[9px] bg-gray-200 text-gray-500 px-1 rounded">DEFAULT</span></div>
+                <div className="text-sm font-medium text-[#1A1816]">london@patient.com</div>
+              </div>
+              <div className="bg-gray-50 rounded-lg px-3 py-2.5">
+                <div className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">Phone <span className="text-[9px] bg-gray-200 text-gray-500 px-1 rounded">DEFAULT</span></div>
+                <div className="text-sm font-medium text-[#1A1816]">+15127865634</div>
+              </div>
+            </div>
+            <div className="bg-gray-50 rounded-lg px-3 py-2.5">
+              <div className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">Preferred Contact Method</div>
+              <div className="text-sm font-medium text-teal-600">Email</div>
+            </div>
+            <div className="bg-gray-50 rounded-lg px-3 py-2.5">
+              <div className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">Emergency Contact</div>
+              <div className="text-sm text-gray-400">—</div>
+            </div>
+            <div className="bg-gray-50 rounded-lg px-3 py-2.5">
+              <div className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">Billing Address</div>
+              <div className="text-sm font-medium text-[#1A1816]">12001 Braun Road, Mount Pleasant, Wisconsin, 53177</div>
+            </div>
+            <div className="bg-gray-50 rounded-lg px-3 py-2.5">
+              <div className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">Shipping Address</div>
+              <div className="text-sm font-medium text-[#1A1816]">12001 Braun Road, Mount Pleasant, Wisconsin, 53177</div>
+              <div className="text-xs text-gray-400">(Same as billing)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Health Metrics */}
+      <div className="bg-white rounded-xl p-5">
+        <div className="flex items-center gap-2 mb-4">
+          <Activity size={16} className="text-[#1A1816]" />
+          <div>
+            <div className="text-sm font-semibold text-[#1A1816]">Health Metrics</div>
+            <div className="text-xs text-gray-400">Physical measurements & vitals</div>
+          </div>
+        </div>
+        <div className="grid grid-cols-4 gap-3">
+          {[
+            { label: "Height", value: "5'6\"" },
+            { label: "Weight", value: "182 lbs" },
+            { label: "BMI", value: "31" },
+            { label: "Blood Pressure", value: "128/82" },
+          ].map((m) => (
+            <div key={m.label} className="bg-gray-50 rounded-lg px-3 py-2.5">
+              <div className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">{m.label}</div>
+              <div className="text-sm font-medium text-[#1A1816]">{m.value}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Current Medications */}
+      <div className="bg-white rounded-xl p-5">
+        <div className="flex items-center gap-2 mb-4">
+          <FlaskConical size={16} className="text-[#1A1816]" />
+          <div>
+            <div className="text-sm font-semibold text-[#1A1816]">Current Medications</div>
+          </div>
+        </div>
+        {[
+          { name: "Metformin", dose: "500mg BID", route: "oral", status: "Active" },
+          { name: "Vitamin D3", dose: "2000 IU daily", route: "oral", status: "Active" },
+        ].map((med) => (
+          <div key={med.name} className="flex items-center justify-between py-2.5 border-b border-gray-50 last:border-0">
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-teal-500" />
+              <span className="text-sm font-medium text-[#1A1816]">{med.name}</span>
+              <span className="text-sm text-gray-500">{med.dose} ({med.route})</span>
+            </div>
+            <span className="text-xs bg-teal-50 text-teal-600 px-2 py-0.5 rounded-full font-medium">{med.status}</span>
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
 
